@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql
+    container_name: database-mysql
+    restart: unless-stopped
+    hostname: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${MYSQL_DATA_PATH}:/var/lib/mysql/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+
+volumes:
+  mysql_data:
